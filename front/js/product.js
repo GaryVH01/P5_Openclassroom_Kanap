@@ -1,5 +1,8 @@
+window.title = "produit";
+
 const idProduct = new URLSearchParams(window.location.search).get("id")
 // console.log(idProduct);
+const nameProduct = new URLSearchParams(window.location.search).get("name")
 
 const url = "http://localhost:3000/api/products/" + idProduct;
 // console.log(url);
