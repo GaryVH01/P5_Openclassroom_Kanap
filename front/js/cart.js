@@ -1,6 +1,6 @@
 // récupération de tous les éléments du panier enregistrés dans le localStorage
 const cart = JSON.parse(localStorage.getItem("cart"));
-console.log(cart);
+console.log("localStorage", cart);
 
 //---------Variables pour le calcul du panier---------------//
 
@@ -8,20 +8,51 @@ let quantityInCart = 0;
 let totalQuantity = 0;
 let totalPrice = 0;
 
+//-----------Variables pour la quantité sélectionnée--------------------//
+
 // ----------------------------------------------------FUNCTIONS---------------------------------------------------------------//
-
-function calculateQuantity() {
-};
-
-
-function calculatePrice() {
-};
+function displayCart(response){
+//
+}
 
 function removeProduct() {
-  document.querySelector('cart__item').remove();
+  // On récupère l'élément permettant de supprimer un article.
+  const buttonRemover = document.querySelectorAll('.deleteItem');
+  //On obtient un tableau sur lequel on boucle pour ajouter un événement à chaque élément "buttonRemover".
+  buttonRemover.forEach((buttonRemover) => {
+    buttonRemover.addEventListener("click", (e) => {
+
+      // On récupère l'article qu'on souhaite supprimer grâce à la méthode element.closest(). 
+      let articleToRemove = buttonRemover.closest('article');
+      console.log(articleToRemove);
+      // Si l'internaute confirme son choix de suppression alors on supprime la balise article.
+      if (confirm('Etes-vous certain de vouloir supprimer cet article du panier?')) {
+        articleToRemove.remove();
+      }
+      // On remet à jour le localStorage
+      function deleteItem(item) {
+        const itemToDelete = cart.findIndex(
+          (p) => p.id === item.id && p.color === item.color)
+          console.log('item to delete')
+          delete cart[itemToDelete]
+      }
+      deleteItem();
+      // Si le panier est vide on alerte l'utilisateur.
+      if (cart === null || cart.length === 0) {
+        alert("Le panier ne comporte aucun article");
+      }
+      else {
+        // Sinon, on recalcule la quantité et le prix total du panier
+        //calculateQuantity();
+        //calculatePrice();
+      }
+      // location.reload();
+    });
+  })
 }
-function changeQuantity() {
-};
+
+
+
 
 
 //---------------------------------------Affichage des produits sur la page panier----------------------------------------------//
@@ -70,18 +101,84 @@ for (let i = 0; i < cart.length; i++) {
             </div>
           </article>`;
 
-      cart.push(article); //ajout de l'objet article au panier
-
-      // Calcul du montant du panier
-      let CartPrice = totalPrice += (article.price * article.quantity);
-      document.querySelector('#totalPrice').textContent = totalPrice;
+          console.log(article);
+      //cart.push(article); //ajout de l'objet article au panier
 
       //Calcul de la quantité d'articles dans le panier
-      let cartQuantity = totalQuantity += article.quantity;
-      document.querySelector('#totalQuantity').textContent = totalQuantity;
+      //On Utilise la variable totalQuantity initiée à 0 et on ajoute le nombre d'articles sélectionnés.
+      function calculateQuantity() {
+        let quantityTarget = document.querySelector('#totalQuantity')
+        let cartQuantity = totalQuantity += article.quantity; // On obtient une nouvelle valeur pour totalQuantity à laquelle on ajoute de nouveau une quantité
+        quantityTarget.textContent = totalQuantity; // On injecte le résultat dans le code HTML
+      }
 
+      calculateQuantity();
+
+
+      // Calcul du montant du panier
+      // Même principe que pour la quantité totale. 
+      function calculatePrice() {
+        let CartPrice = totalPrice += (article.price * article.quantity);
+        document.querySelector('#totalPrice').textContent = totalPrice;
+      }
+
+      calculatePrice();
+
+
+      function changeQuantity() {
+        //récupérer mes éléments
+        // Si la nouvelle quantité est supérieure à l'ancienne alors addition sinon soustraction et si 0 suppression de l'article complet
+        // Ajout de l'écouteur sur l'input, type change. 
+        let quantitySelector = document.querySelector('.itemQuantity');
+        quantitySelector.addEventListener('change', (e) => {
+          if (quantitySelector.value++) {
+            totalQuantity ++;
+          }
+          else if (quantitySelector.value--) {
+            totalQuantity --;
+          } 
+        });
+      };
+            changeQuantity();
+
+
+      //-------------------------Appel des fonctions créées précédemment-----------------//
+      removeProduct();
+      
+  
     })
     .catch(error => alert("Erreur : " + error));
 }
 
+//location.reload();
 
+
+
+
+
+
+
+
+
+/*
+// --------------------------Vérifications du formulaire-----------------------------------//
+
+// Déclaration des variables et récupération des éléments dans le DOM.
+let form = document.querySelector('form');
+let firstName = document.querySelector('#firstname');
+let errorMessageFirstName = document.querySelector('firstNameErrorMsg').textContent('Cet espace ne peut contenir de chiffres ou de caaractères spéciaux!')
+let lastName = document.querySelector('#lastName');
+let errorMessageLastName = document.querySelector('lastNameErrorMsg').textContent('Cet espace ne peut contenir de chiffres ou de caaractères spéciaux!')
+let adress = document.querySelector('#address');
+let errorMessageAdresse = document.querySelector('addressErrorMsg').textContent('Cet espace ne peut contenir de chiffres ou de caaractères spéciaux!')
+let city = document.querySelector('#city');
+let errorMessageCity = document.querySelector('cityErrorMsg').textContent('Cet espace ne peut contenir de chiffres ou de caaractères spéciaux!')
+let email = document.querySelector('#email');
+let errorMessageEmail = document.querySelector('emailErrorMsg').textContent('email invalide')
+
+
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault
+})
+*/
