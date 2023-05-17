@@ -4,52 +4,15 @@ console.log("localStorage", cart);
 
 //---------Variables pour le calcul du panier---------------//
 
-let quantityInCart = 0;
 let totalQuantity = 0;
 let totalPrice = 0;
 
-//-----------Variables pour la quantité sélectionnée--------------------//
-
 // ----------------------------------------------------FUNCTIONS---------------------------------------------------------------//
-function displayCart(response){
-//
+function displayCart(response) {
+  //
 }
 
-function removeProduct() {
-  // On récupère l'élément permettant de supprimer un article.
-  const buttonRemover = document.querySelectorAll('.deleteItem');
-  //On obtient un tableau sur lequel on boucle pour ajouter un événement à chaque élément "buttonRemover".
-  buttonRemover.forEach((buttonRemover) => {
-    buttonRemover.addEventListener("click", (e) => {
 
-      // On récupère l'article qu'on souhaite supprimer grâce à la méthode element.closest(). 
-      let articleToRemove = buttonRemover.closest('article');
-      console.log(articleToRemove);
-      // Si l'internaute confirme son choix de suppression alors on supprime la balise article.
-      if (confirm('Etes-vous certain de vouloir supprimer cet article du panier?')) {
-        articleToRemove.remove();
-      }
-      // On remet à jour le localStorage
-      function deleteItem(item) {
-        const itemToDelete = cart.findIndex(
-          (p) => p.id === item.id && p.color === item.color)
-          console.log('item to delete')
-          delete cart[itemToDelete]
-      }
-      deleteItem();
-      // Si le panier est vide on alerte l'utilisateur.
-      if (cart === null || cart.length === 0) {
-        alert("Le panier ne comporte aucun article");
-      }
-      else {
-        // Sinon, on recalcule la quantité et le prix total du panier
-        //calculateQuantity();
-        //calculatePrice();
-      }
-      // location.reload();
-    });
-  })
-}
 
 
 
@@ -101,30 +64,29 @@ for (let i = 0; i < cart.length; i++) {
             </div>
           </article>`;
 
-          console.log(article);
-      //cart.push(article); //ajout de l'objet article au panier
 
+
+
+      
       //Calcul de la quantité d'articles dans le panier
       //On Utilise la variable totalQuantity initiée à 0 et on ajoute le nombre d'articles sélectionnés.
       function calculateQuantity() {
         let quantityTarget = document.querySelector('#totalQuantity')
-        let cartQuantity = totalQuantity += article.quantity; // On obtient une nouvelle valeur pour totalQuantity à laquelle on ajoute de nouveau une quantité
+        totalQuantity += article.quantity; // On obtient une nouvelle valeur pour totalQuantity à laquelle on ajoute de nouveau une quantité
         quantityTarget.textContent = totalQuantity; // On injecte le résultat dans le code HTML
       }
 
-      calculateQuantity();
 
 
       // Calcul du montant du panier
       // Même principe que pour la quantité totale. 
       function calculatePrice() {
-        let CartPrice = totalPrice += (article.price * article.quantity);
-        document.querySelector('#totalPrice').textContent = totalPrice;
+        let priceTarget = document.querySelector('#totalPrice')
+        totalPrice += (article.price * article.quantity);
+        priceTarget.textContent = totalPrice;
       }
 
-      calculatePrice();
-
-
+   
       function changeQuantity() {
         //récupérer mes éléments
         // Si la nouvelle quantité est supérieure à l'ancienne alors addition sinon soustraction et si 0 suppression de l'article complet
@@ -132,20 +94,65 @@ for (let i = 0; i < cart.length; i++) {
         let quantitySelector = document.querySelector('.itemQuantity');
         quantitySelector.addEventListener('change', (e) => {
           if (quantitySelector.value++) {
-            totalQuantity ++;
+            totalQuantity++;
           }
           else if (quantitySelector.value--) {
-            totalQuantity --;
-          } 
+            totalQuantity--;
+          }
         });
+        saveToLocalStorage();
       };
-            changeQuantity();
 
+     
+
+      function removeProduct() {
+        // On récupère l'élément permettant de supprimer un article.
+        const buttonRemover = document.querySelectorAll('.deleteItem');
+        //On obtient un tableau sur lequel on boucle pour ajouter un événement à chaque élément "buttonRemover".
+        buttonRemover.forEach((buttonRemover) => {
+          buttonRemover.addEventListener("click", (e) => {
+
+            // On récupère l'article qu'on souhaite supprimer grâce à la méthode element.closest(). 
+            let articleToRemove = buttonRemover.closest('article');
+
+            // Si l'internaute confirme son choix de suppression alors on supprime la balise article.
+            if (confirm('Etes-vous certain de vouloir supprimer cet article du panier?')) {
+              articleToRemove.remove();
+            }
+
+            // On retire le produit du panier en triant les articles par leur id et leur couleur
+            const productToDelete = cart.findIndex((el) => el.id === article.id && el.color === article.color)
+            console.log('produit à supprimer', productToDelete)
+            cart.splice(productToDelete, 1); // On retire l'objet qu'on a obtenu dans la variable productToDelete
+
+            // On met à jour le localStorage
+            saveToLocalStorage();
+
+            // Si le panier est vide on alerte l'utilisateur.
+            if (cart === null || cart.length === 0) {
+              alert("Le panier ne comporte aucun article");
+            }
+           
+            
+            //calculateQuantity()
+            calculateQuantity();
+            calculatePrice();
+            location.reload();
+          });
+        })
+      }
+
+      function saveToLocalStorage() {
+        localStorage.setItem("cart", JSON.stringify(cart));
+      }
 
       //-------------------------Appel des fonctions créées précédemment-----------------//
+
+      calculateQuantity();
+      calculatePrice();
       removeProduct();
-      
-  
+      changeQuantity();
+
     })
     .catch(error => alert("Erreur : " + error));
 }

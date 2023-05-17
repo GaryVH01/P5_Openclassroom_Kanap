@@ -73,7 +73,7 @@ function displayProduct(response) {
 
 
     // Création du panier
-    // récupération du boutton addToCart et ajout d'un écouteru d'événements
+    // récupération du boutton addToCart et ajout d'un écouteur d'événements
     const boutton = document.getElementById("addToCart");
     boutton.addEventListener("click", (e) => {
         e.preventDefault();
@@ -128,12 +128,13 @@ function addToCart(product) {
     let searchProduct = cart.find(el => el.id === product.id && el.color === product.color); // fonction find() pour vérifier, dans le tableau, la présence d'un élément.
     // console.log(searchProduct);
     // ajout condition pour quantité
-if (searchProduct != undefined) {
-    searchProduct.quantity += product.quantity;
-} else {
-    cart.push(product);
-}
+    if (searchProduct != undefined) {
+        searchProduct.quantity += product.quantity;
+    } else {
+        cart.push(product);
+    }
     saveToLocalStorage(cart);
+    alert('Le produit a bien été ajouté au panier.')
 }
 
 
