@@ -115,7 +115,7 @@ function saveToLocalStorage(cart) {
 // Création d'une fonction permettant de récupèrer le panier du localStorage
 function getCart() {
     let cart = localStorage.getItem("cart");
-    if (cart === null) { //s'il n'y a rien dans le localStorage, on récupère un array.
+    if (cart === null || cart === undefined) { //s'il n'y a rien dans le localStorage, on récupère un array.
         return [];
     } else {  //sinon on récupère un objet JSON du panier.
         return JSON.parse(cart);
