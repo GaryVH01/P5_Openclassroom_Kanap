@@ -225,11 +225,13 @@ firstName.addEventListener('change', (e) => {
   checkFirstName(this);
 })
 const checkFirstName = () => {
+  errorMessageFirstName.style.display = 'none'
   if (regExpIdentity.test(firstName.value)) {
     firstName.style.border = 'solid green 2px';
     return true
   }
   else {
+    errorMessageFirstName.style.display = 'block'
     errorMessageFirstName.innerHTML = 'Merci de renseigner un prénom valide'
     firstName.style.border = 'solid red 2px';
     firstName.style.color = 'red';
@@ -237,17 +239,21 @@ const checkFirstName = () => {
   }
 }
 
+
+
 // ON écoute l'input Nom
 lastName.addEventListener('change', (e) => {
   checkLastName(this);
 })
 const checkLastName = () => {
+  errorMessageLastName.style.display ='none';
   if (regExpIdentity.test(lastName.value)) {
     lastName.style.border = 'solid green 2px';
     return true
   }
   else {
     errorMessageLastName.innerHTML = 'Merci de renseigner un nom valide'
+    errorMessageLastName.style.display ='block';
     lastName.style.border = 'solid red 2px';
     lastName.style.color = 'red';
     return false
@@ -259,11 +265,13 @@ email.addEventListener('change', (e) => {
   checkEmail(this);
 })
 const checkEmail = () => {
+  errorMessageEmail.style.display = 'none';
   if (regExpEmail.test(email.value)) {
     email.style.border = 'solid green 2px';
     return true;
   }
   else {
+    errorMessageEmail.style.display = 'block';
     errorMessageEmail.innerHTML = 'Adresse email non Valide'
     email.style.border = 'solid red 2px';
     errorMessageEmail.style.color = 'red';
@@ -276,11 +284,13 @@ adress.addEventListener('change', (e) => {
   checkAdress(this);
 })
 const checkAdress = () => {
+  errorMessageAdress.style.display = 'none'
   if (regExpAdress.test(adress.value)) {
     adress.style.border = 'solid green 2px';
     return true
   }
   else {
+    errorMessageAdress.style.display = 'block'
     errorMessageAdress.innerHTML = 'Adresse non valide'
     adress.style.border = 'solid red 2px';
     errorMessageAdress.style.color = 'red';
@@ -293,11 +303,13 @@ city.addEventListener('change', (e) => {
   checkCity(this);
 })
 const checkCity = () => {
+  errorMessageCity.style.display='none'
   if (regExpCity.test(city.value)) {
     city.style.border = 'solid green 2px';
     return true
   }
   else {
+    errorMessageCity.style.display='bloc'
     errorMessageCity.innerHTML = 'Merci de renseigner une ville existante'
     city.style.border = 'solid red 2px';
     errorMessageCity.style.color = 'red';
