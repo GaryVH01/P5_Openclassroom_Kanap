@@ -1,4 +1,3 @@
-window.title = "produit";
 
 const idProduct = new URLSearchParams(window.location.search).get("id")
 // console.log(idProduct);
@@ -137,22 +136,5 @@ function addToCart(product) {
     alert('Le produit a bien été ajouté au panier.')
 }
 
-
-//-----------------Ancienne fonction à retravailler--------------------
-/*
-function addToCart(product) {
-        let cart = localStorage.getItem("cart")
-        if (!cart || cart.length === 0) {
-        cart.push(product);
-        window.localStorage.setItem("cart", JSON.stringify(cart));
-    } else {
-        const getRefreshCart = window.localStorage.getItem('cart', JSON.stringify(cart));
-        const refreshCart = JSON.parse(getRefreshCart);
-        refreshCart.push(cart);
-        window.localStorage.setItem('cart', JSON.stringify(refreshCart));
-        // console.log("ajout du nouveau panier")
-}
-}
-*/
 
 

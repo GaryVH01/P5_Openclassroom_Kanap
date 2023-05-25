@@ -1,4 +1,5 @@
 const url = "http://localhost:3000/api/products/";
+
 const section = document.getElementById("items");
 
 // On récupère les éléments du DOM grâce à la commande fetch
