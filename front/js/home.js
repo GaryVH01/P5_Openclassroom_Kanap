@@ -1,6 +1,6 @@
 const url = "http://localhost:3000/api/products/";
 
-const section = document.getElementById("items");
+const section = document.getElementById("items"); // Récupération de la section parent qui reçoit les produits
 
 // On récupère les éléments du DOM grâce à la commande fetch
 fetch(url)

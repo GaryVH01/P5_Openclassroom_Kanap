@@ -2,8 +2,42 @@
 let cart = JSON.parse(localStorage.getItem("cart"));
 console.log("localStorage", cart)
 
-// ----------------------------------------------------FUNCTIONS---------------------------------------------------------------//
+//---------------------------------------Affichage des produits sur la page panier----------------------------------------------//
 
+//Création d'une boucle pour récupérer les infos des produits non stockées localement et recréer le DOM.
+for (let i = 0; i < cart.length; i++) {
+  fetch("http://localhost:3000/api/products/" + cart[i].id)
+    .then((response) => response.json())
+    .then((response) => {
+
+      const article = {
+        //création d'un objet réunissant toutes les infos utiles à la création de l'article du panier et + facile à utiliser ensuite.
+        id: cart[i].id,
+        color: cart[i].color,
+        quantity: cart[i].quantity,
+        name: response.name, // récupération des infos non stockées dans le localStorage
+        price: response.price,
+        alt: response.altTxt,
+        img: response.imageUrl,
+      };
+      
+      // Utilisation de la méthode innerHTML pour limiter les lignes de code.
+      const sectionCart = document.querySelector('#cart__items');
+
+      displayCart(sectionCart, article);
+      
+      // Appel des fonctions permettant la modification de la quantité de l'article ou sa suppression
+      removeProduct();
+      changeQuantity();
+    })
+    .catch(error => alert("Erreur : " + error));
+}
+//Appel des fonctions qui doivent être en dehors de la boucle
+calculatePrice();
+calculateQuantity();
+
+
+// ----------------------------------------------------FUNCTIONS---------------------------------------------------------------//
 // Fonction d'affichage du panier
 function displayCart(selector, article){
   selector.innerHTML += `<article class="cart__item" data-id="${article.id}" data-color="${article.color}">
@@ -135,42 +169,6 @@ function saveToLocalStorage() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-
-//---------------------------------------Affichage des produits sur la page panier----------------------------------------------//
-
-//Création d'une boucle pour récupérer les infos des produits non stockées localement et recréer le DOM.
-for (let i = 0; i < cart.length; i++) {
-  fetch("http://localhost:3000/api/products/" + cart[i].id)
-    .then((response) => response.json())
-    .then((response) => {
-
-      const article = {
-        //création d'un objet réunissant toutes les infos utiles à la création de l'article du panier et + facile à utiliser ensuite.
-        id: cart[i].id,
-        color: cart[i].color,
-        quantity: cart[i].quantity,
-        name: response.name, // récupération des infos non stockées dans le localStorage
-        price: response.price,
-        alt: response.altTxt,
-        img: response.imageUrl,
-      };
-      
-      // Utilisation de la méthode innerHTML pour limiter les lignes de code.
-      const sectionCart = document.querySelector('#cart__items');
-
-      displayCart(sectionCart, article);
-      
-      // Appel des fonctions permettant la modification de la quantité de l'article ou sa suppression
-      removeProduct();
-      changeQuantity();
-    })
-    .catch(error => alert("Erreur : " + error));
-}
-//Appel des fonctions qui doivent être en dehors de la boucle
-calculatePrice();
-calculateQuantity();
-
-
 // ---------------------------------------------------------------Vérifications du formulaire---------------------------------------------------------------//
 
 // Déclaration des variables et récupération des éléments dans le DOM.
@@ -193,7 +191,7 @@ let errorMessageEmail = document.querySelector('#emailErrorMsg');
 
 let buttonOrder = document.querySelector('#order');
 
-// ---------------------------------Déclaration des expressions régulières qui seront testées dans le formulaire---------------------------------------------//
+// ---------------------------------Déclaration des expressions régulières (RegExp) qui seront testées dans le formulaire---------------------------------------------//
 
 const regExpEmail = /[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([_\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})/;
 const regExpIdentity = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;

@@ -12,6 +12,7 @@ fetch(url)
     .then(response => response.json())
     .then(response => {
 
+        // appel de la fonction d'affichage du produit
         displayProduct(response)
 
     })
@@ -19,11 +20,8 @@ fetch(url)
     .catch(error => alert("Erreur : " + error));
 
 
-
 function displayProduct(response) {
-
     // console.log(response)
-
 
     //On récupère l'élément HTML auquel on veut ajouter l'image. Ensuite on crée la balise image.On définit la source de l'image.Puis on ajoute l'attribut alt à la balise img.
     const imageTarget = document.getElementsByClassName("item__img")[0];
@@ -98,19 +96,16 @@ function displayProduct(response) {
         } else {
             alert("Vous devez sélectionner une quantité valide (nombre entier) et une couleur")
         }
-
     })
-
 }
 
-/* ----------------------------------------Les FONCTIONS-------------------------------------------------*/
-
+/* ----------------------------------------------------Les FONCTIONS-----------------------------------------------------------*/
 // Création d'une fonction permettant de stocker le panier dans le localStorage
 function saveToLocalStorage(cart) {
     localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-// Création d'une fonction permettant de récupèrer le panier du localStorage
+// Création d'une fonction permettant de récupèrer le panier stocké dans le localStorage
 function getCart() {
     let cart = localStorage.getItem("cart");
     if (cart === null || cart === undefined) { //s'il n'y a rien dans le localStorage, on récupère un array.
