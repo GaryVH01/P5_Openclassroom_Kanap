@@ -4,14 +4,34 @@ console.log("localStorage", cart)
 
 // ----------------------------------------------------FUNCTIONS---------------------------------------------------------------//
 
+// Fonction d'affichage du panier
+function displayCart(selector, article){
+  selector.innerHTML += `<article class="cart__item" data-id="${article.id}" data-color="${article.color}">
+        <div class="cart__item__img">
+          <img src= "${article.img}" alt="Photographie d'un canapé">
+        </div>
+        <div class="cart__item__content">
+          <div class="cart__item__content__description">
+            <h2>${article.name}</h2>
+            <p>${article.color}</p>
+            <p class="price">${article.price} €</p>
+          </div>
+          <div class="cart__item__content__settings">
+            <div class="cart__item__content__settings__quantity">
+              <p>Qté : </p>
+              <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${article.quantity}">
+            </div>
+            <div class="cart__item__content__settings__delete">
+              <p class="deleteItem">Supprimer</p>
+            </div>
+          </div>
+        </div>
+      </article>`;
 
-function displayCart(response) {
-
+  if (cart === null || cart.length == 0) {
+    alert('Votre panier est vide')
+  }
 }
-
-
-
-
 
 //Calcul de la quantité d'articles dans le panier
 //On Utilise la variable totalQuantity initiée à 0 et on ajoute le nombre d'articles sélectionnés.
@@ -24,14 +44,9 @@ function calculateQuantity() {
   quantityTarget.textContent = totalQuantity; // On injecte le résultat dans le code HTML
 }
 
-
-
-
-
 // Calcul du montant du panier
 // Même principe que pour la quantité totale. 
-function calculatePrice() {
-  
+function calculatePrice() { 
   let totalPrice = 0;
   for (let i = 0; i < cart.length; i++) {
     fetch("http://localhost:3000/api/products/" + cart[i].id)
@@ -49,18 +64,13 @@ function calculatePrice() {
   }
 }
 
-
-
-
-
-
 function changeQuantity() {
   const quantitySelectors = document.querySelectorAll('.itemQuantity');
   // let quantityToChange = quantity.value
 
   quantitySelectors.forEach((quantitySelector) => {
     quantitySelector.addEventListener("change", (e) => {
-      let parentArticle = e.target.parentNode.parentNode.parentNode.parentNode;
+      let parentArticle = e.target.closest('article');
       let idProduct = parentArticle.dataset.id;
       let colorProduct = parentArticle.dataset.color;
       console.log(parentArticle)
@@ -83,10 +93,6 @@ function changeQuantity() {
 };
 
 
-
-
-
-
 function removeProduct() {
 
   // On récupère l'élément permettant de supprimer un article.
@@ -95,7 +101,7 @@ function removeProduct() {
   //On obtient un tableau sur lequel on boucle pour ajouter un événement à chaque élément "buttonRemover".
   buttonRemover.forEach((buttonRemover) => {
     buttonRemover.addEventListener("click", (e) => {
-      let parentArticle = e.target.parentNode.parentNode.parentNode.parentNode;
+      let parentArticle = e.target.closest('article');
       let idProduct = parentArticle.dataset.id;
       let colorProduct = parentArticle.dataset.color;
 
@@ -148,34 +154,11 @@ for (let i = 0; i < cart.length; i++) {
         alt: response.altTxt,
         img: response.imageUrl,
       };
+      
       // Utilisation de la méthode innerHTML pour limiter les lignes de code.
       const sectionCart = document.querySelector('#cart__items');
 
-      sectionCart.innerHTML += `<article class="cart__item" data-id="${article.id}" data-color="${article.color}">
-            <div class="cart__item__img">
-              <img src= "${article.img}" alt="Photographie d'un canapé">
-            </div>
-            <div class="cart__item__content">
-              <div class="cart__item__content__description">
-                <h2>${article.name}</h2>
-                <p>${article.color}</p>
-                <p class="price">${article.price} €</p>
-              </div>
-              <div class="cart__item__content__settings">
-                <div class="cart__item__content__settings__quantity">
-                  <p>Qté : </p>
-                  <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${article.quantity}">
-                </div>
-                <div class="cart__item__content__settings__delete">
-                  <p class="deleteItem">Supprimer</p>
-                </div>
-              </div>
-            </div>
-          </article>`;
-
-      if (cart === null || cart.length == 0) {
-        alert('Votre panier est vide')
-      }
+      displayCart(sectionCart, article);
       
       // Appel des fonctions permettant la modification de la quantité de l'article ou sa suppression
       removeProduct();

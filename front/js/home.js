@@ -6,17 +6,13 @@ const section = document.getElementById("items");
 fetch(url)
     .then(response => response.json())
     .then(response => {
-        console.log(response)
-        console.log(response[0])
-
-
+       
         /* Création des différents éléments HTML (article, img, h3, p) depuis l'API grâce à une boucle */
-
         for (let i = 0; i < response.length; i++) {
 
-           const link = document.createElement("a");
-           link.setAttribute("href", "product.html?id="+response[i]._id);
-           console.log(link);
+            const link = document.createElement("a");
+            link.setAttribute("href", "product.html?id=" + response[i]._id);
+            console.log(link);
 
             const products = document.createElement("article");
 
@@ -38,9 +34,8 @@ fetch(url)
             products.appendChild(image);
             products.appendChild(title);
             products.appendChild(description);
-            
+
         }
     })
     .catch(error => alert("Erreur : " + error));
 
- 

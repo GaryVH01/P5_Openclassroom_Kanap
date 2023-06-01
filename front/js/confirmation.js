@@ -4,7 +4,6 @@ let searchParams = new URLSearchParams(url);
 let orderId = searchParams.get('orderId'); // récupération de l'id de la commande 
 //console.log(orderId);
 
-
 const targetOrderId = document.querySelector('#orderId');
 targetOrderId.innerHTML = orderId; // Affichage de l'id de la commande pour le client
 
