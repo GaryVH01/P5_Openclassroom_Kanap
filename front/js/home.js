@@ -2,9 +2,9 @@ const url = "http://localhost:3000/api/products/";
 
 const section = document.getElementById("items"); // Récupération de la section parent qui reçoit les produits
 
-// On récupère les éléments du DOM grâce à la commande fetch
+// On récupère l'ensemble des produits grâce à la méthode fetch
 fetch(url)
-    .then(response => response.json())
+    .then(response => response.json()) // Conversion de la réponse en format JSON.
     .then(response => {
        
         /* Création des différents éléments HTML (article, img, h3, p) depuis l'API grâce à une boucle */
@@ -37,5 +37,5 @@ fetch(url)
 
         }
     })
-    .catch(error => alert("Erreur : " + error));
+    .catch(error => alert("Erreur : " + error)); // promise renvoyée "reject"
 

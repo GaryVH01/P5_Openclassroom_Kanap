@@ -1,6 +1,6 @@
 
 const idProduct = new URLSearchParams(window.location.search).get("id")
-// console.log(idProduct);
+console.log(idProduct);
 
 const url = "http://localhost:3000/api/products/" + idProduct;
 // console.log(url);
@@ -83,7 +83,7 @@ function displayProduct(response) {
 
         // Variable product, dans laquelle on stocke un objet comprenant (id, quantity et color)
         //Si quantité supérieure à 0 et couleur sélectionnée ET nombre entier, on appelle la fonction addToCart.
-        if (colorSelected != "" && quantitySelected > 0 && Number.isInteger(quantitySelected)) {
+        if (colorSelected != "" && quantitySelected > 0 && quantitySelected < 100 && quantitySelected <= 100 && Number.isInteger(quantitySelected) ) {
             const product = {
                 id: idProduct,
                 quantity: quantitySelected,
@@ -94,7 +94,7 @@ function displayProduct(response) {
             addToCart(product)
 
         } else {
-            alert("Vous devez sélectionner une quantité valide (nombre entier) et une couleur")
+            alert("Vous devez sélectionner une quantité valide (nombre entier compris entre 1 et 100) et une couleur")
         }
     })
 }

@@ -1,4 +1,4 @@
-// récupération de tous les éléments du panier enregistrés dans le localStorage
+// Récupération de tous les éléments du panier enregistrés dans le localStorage
 let cart = JSON.parse(localStorage.getItem("cart"));
 console.log("localStorage", cart)
 
@@ -11,7 +11,7 @@ for (let i = 0; i < cart.length; i++) {
     .then((response) => {
 
       const article = {
-        //création d'un objet réunissant toutes les infos utiles à la création de l'article du panier et + facile à utiliser ensuite.
+        //Création d'un objet réunissant toutes les infos utiles à la création de l'article du panier et + facile à utiliser ensuite.
         id: cart[i].id,
         color: cart[i].color,
         quantity: cart[i].quantity,
@@ -37,7 +37,7 @@ calculatePrice();
 calculateQuantity();
 
 
-// ----------------------------------------------------FUNCTIONS---------------------------------------------------------------//
+// ----------------------------------------------------FONCTIONS---------------------------------------------------------------//
 // Fonction d'affichage du panier
 function displayCart(selector, article){
   selector.innerHTML += `<article class="cart__item" data-id="${article.id}" data-color="${article.color}">
@@ -98,9 +98,10 @@ function calculatePrice() {
   }
 }
 
+//Fonction pour changer la quantité d'articles.
+// On écoute l'input quantity pour chaque produit et si un changement se produit, on met à jour les infos du panier
 function changeQuantity() {
   const quantitySelectors = document.querySelectorAll('.itemQuantity');
-  // let quantityToChange = quantity.value
 
   quantitySelectors.forEach((quantitySelector) => {
     quantitySelector.addEventListener("change", (e) => {
@@ -113,15 +114,13 @@ function changeQuantity() {
       //console.log('produit dont la quantité sera modifiée : ', productToChangeQuantity)
 
       if (productToChangeQuantity != undefined) {
-        //console.log("quantité modifiée, désormais à : " + quantitySelector.value)
-        console.log(quantitySelector.value);
+       // console.log(quantitySelector.value);
         productToChangeQuantity.quantity = quantitySelector.value;
       }
       // Ensuite il faut ajouter ou supprimer la quantité au localstorage pour mettre à jour le prix ensuite
       saveToLocalStorage();
       calculatePrice();
       calculateQuantity();
-      //location.reload();
     });
   })
 };
