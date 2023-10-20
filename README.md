@@ -1,10 +1,29 @@
+
 # Kanap #
+Réalisation de la partie frontend
+Utilisation du langage javascript
+Sans librairie JS
+Utilisation du localStorage
+Appel à une API
+Implémentation des fonctionnalités:
+  * Ajout article au panier,
+  * Incrémenter, décrémenter ou supprimer un article
+  * Calcul quantité d'articles et prix total.
+  * Vérification d'un formulaire
+  * Récupération numéro de commande
+Mise en place d'un plan de test d'acceptation
 
-This is the front end and back end server for Project 5 of the Web Developer path.
+Pour lancer le site il faut : 
+  * Pour la partie frontend :
+  Il suffit de lancer live server sur la machine
+  * Pour la partie backend :
+  cd backend
+  node server
+  (Node doit être installé sur la machine)
 
-### Back end Prerequisites ###
 
-You will need to have Node and `npm` installed locally on your machine.
+
+Infos complémentaires 
 
 ### Back end Installation ###
 
