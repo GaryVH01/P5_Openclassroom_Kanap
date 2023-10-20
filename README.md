@@ -1,6 +1,7 @@
 ![JavaScript](https://github.com/GaryVH01/P5_Openclassroom_Kanap/assets/124792314/a7f7316f-830b-4a8a-80f8-f9c82b46abe2)
-# Kanap #
+![Postman](https://github.com/GaryVH01/P6_Openclassroom-Piiquante/assets/124792314/162f0eaa-11b3-4c26-9ad1-21b839099fd3)
 
+# Kanap #
 Réalisation de la partie frontend
 Utilisation du langage javascript
 Sans librairie JS
